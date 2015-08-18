@@ -23,7 +23,7 @@ cd ..
 
 4. Pull the AngularJS sample submodule on the Demos repository
 cd Demos
-git submodule update --init
+git submodule update --init --remote --rebase
 cd ..
 
 5. Build Bridge, opening with VS 2013/2015 either:
