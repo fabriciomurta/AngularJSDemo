@@ -43,7 +43,11 @@ Bridge/Bridge.Frameworks.Builder.Testing.sln
 7.1.1. To refresh the view, click the 'Refresh' button on the Solution Explorer
        toolbar when you have the 'WebInterface' project selected.
 
-8. Run the project (without debugging! -- hotkey ctrl+F5) Your browser will open
+8. Set the startup project to 'WebInterface' 
+8.1. right-click on the project in solution explorer,
+8.2. click 'Set startup project')
+
+9. Run the project (without debugging! -- hotkey ctrl+F5) Your browser will open
    in the test AngularJS page.
 
 Appendix 1: pure AngularJS page.
