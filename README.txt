@@ -5,49 +5,41 @@ To run this example, follow this walkthrought:
 1. Get Bridge.NET sources and demo in a same directory
 mkdir bridge
 cd bridge
-git clone https://www.github.com/bridgedotnet/Bridge
-git clone https://www.github.com/bridgedotnet/Builder
-git clone https://www.github.com/bridgedotnet/Frameworks
+git clone --branch AngularJS --depth 1 https://www.github.com/bridgedotnet/Bridge
+git clone --depth 1 https://www.github.com/bridgedotnet/Builder
+git clone --branch AngularJS --depth 1 https://www.github.com/bridgedotnet/Frameworks
 
 2. Clone also the Demos repository to the same directory Bridge repos were
    cloned into
-git clone https://www.github.com/bridgedotnet/Demos
+git clone --detph 1 https://www.github.com/bridgedotnet/Demos
 
-3. Switch Bridge and Frameworks repos to the AngularJS branch
-cd Bridge
-git checkout AngularJS
-cd ..
-cd Frameworks
-git checkout AngularJS
-cd ..
-
-4. Pull the AngularJS sample submodule on the Demos repository
+3. Pull the AngularJS sample submodule on the Demos repository
 cd Demos
-git submodule update --init --remote --rebase
+git submodule update --init --remote --rebase --depth 1
 cd ..
 
-5. Build Bridge, opening with VS 2013/2015 either:
+4. Build Bridge, opening with VS 2013/2015 either:
 Bridge/Bridge.Frameworks.Builder.sln
 Bridge/Bridge.Frameworks.Builder.Testing.sln
 
-5.1. You need to rebuild the solution if you skipped step 1 for example,
+4.1. You need to rebuild the solution if you skipped step 1 for example,
      if you already had the project cloned and built on your computer
      See Appendix 2 if you get errors trying to rebuild.
 
-6. Open Demos/AngularJS/AngularJSDemo/AngularJSDemo.sln
+5. Open Demos/AngularJS/AngularJSDemo/AngularJSDemo.sln
 
-7. Build the project (F6 key).
-7.1. After it finishes, you can refresh the 'WebInterface' project so it shows
+6. Build the project (F6 key).
+6.1. After it finishes, you can refresh the 'WebInterface' project so it shows
      the generated JavaScript files that, for convenience are auto deployed
      there.
-7.1.1. To refresh the view, click the 'Refresh' button on the Solution Explorer
+6.1.1. To refresh the view, click the 'Refresh' button on the Solution Explorer
        toolbar when you have the 'WebInterface' project selected.
 
-8. Set the startup project to 'WebInterface' 
-8.1. right-click on the project in solution explorer,
-8.2. click 'Set startup project')
+7. Set the startup project to 'WebInterface'
+7.1. right-click on the project in solution explorer,
+7.2. click 'Set startup project')
 
-9. Run the project (without debugging! -- hotkey ctrl+F5) Your browser will open
+8. Run the project (without debugging! -- hotkey ctrl+F5) Your browser will open
    in the test AngularJS page.
 
 Appendix 1: pure AngularJS page.
