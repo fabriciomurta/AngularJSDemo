@@ -10,6 +10,7 @@
         myBa.message = "hello, AngularJS dynamic world!";
         myBa.foo = "foo fighters!!";
         myBa.bar = "777!";
+        myBa.checkpoints = [ "Alpha", "Bravo", "Charlie", "Delta" ];
         hwApp.controller('hwctl', ['$scope', function ($scope) {
             for (var key in myBa) {
                 $scope[key] = myBa[key];
@@ -37,5 +38,13 @@
 
         // Additionally, this MUST run before the page is completely loaded (before DOMContentLoaded)
     </script>
+    <div ng-controller="hwctl">
+     <ul>
+      <li ng-repeat="checkpoint in checkpoints">
+       <span>Checkpoint:</span>
+       <p>{{checkpoint}}</p>
+      </li>
+     </ul>
+    </div>
 </body>
 </html>
