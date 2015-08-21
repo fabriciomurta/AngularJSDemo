@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>GenericProject</ItemType>
+    <ProjectGuid>{664ED912-ACB9-496A-838F-76E88CE165DB}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
+    <OutputPath>.\</OutputPath>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="open -n /Applications/Safari.app index.html" workingdir="${ProjectDir}" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="index.html" />
+    <None Include="..\WebInterface\index-angular.html">
+      <Link>index-angular.html</Link>
+    </None>
+    <None Include="..\WebInterface\js\angularJSDemo.js">
+      <Link>js\angularJSDemo.js</Link>
+    </None>
+    <None Include="..\WebInterface\js\bridge.js">
+      <Link>js\bridge.js</Link>
+    </None>
+    <None Include="..\WebInterface\js\descript.ion">
+      <Link>js\descript.ion</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="js\" />
+  </ItemGroup>
+</Project>
