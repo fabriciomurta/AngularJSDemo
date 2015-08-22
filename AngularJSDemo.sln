@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2012
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularJSDemo", "AngularJSDemo\AngularJSDemo.csproj", "{5F431033-B7A1-48B9-AE39-E5D18EF89E5C}"
@@ -46,10 +46,14 @@ Global
 		{5F431033-B7A1-48B9-AE39-E5D18EF89E5C}.Default|Any CPU.Build.0 = Debug|Any CPU
 		{5F431033-B7A1-48B9-AE39-E5D18EF89E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F431033-B7A1-48B9-AE39-E5D18EF89E5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0976887B-530D-432B-92A3-78BAC0044E6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0976887B-530D-432B-92A3-78BAC0044E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664ED912-ACB9-496A-838F-76E88CE165DB}.Debug|Any CPU.ActiveCfg = Default|Any CPU
+		{664ED912-ACB9-496A-838F-76E88CE165DB}.Debug|Any CPU.Build.0 = Default|Any CPU
 		{664ED912-ACB9-496A-838F-76E88CE165DB}.Default|Any CPU.ActiveCfg = Default|Any CPU
 		{664ED912-ACB9-496A-838F-76E88CE165DB}.Default|Any CPU.Build.0 = Default|Any CPU
+		{664ED912-ACB9-496A-838F-76E88CE165DB}.Release|Any CPU.ActiveCfg = Default|Any CPU
+		{664ED912-ACB9-496A-838F-76E88CE165DB}.Release|Any CPU.Build.0 = Default|Any CPU
+		{0976887B-530D-432B-92A3-78BAC0044E6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0976887B-530D-432B-92A3-78BAC0044E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0976887B-530D-432B-92A3-78BAC0044E6B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{0976887B-530D-432B-92A3-78BAC0044E6B}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection

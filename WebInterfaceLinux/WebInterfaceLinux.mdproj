@@ -7,7 +7,7 @@
     <ProjectGuid>{664ED912-ACB9-496A-838F-76E88CE165DB}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
-    <OutputPath>.\</OutputPath>
+    <OutputPath>.</OutputPath>
     <CustomCommands>
       <CustomCommands>
         <Command type="Execute" command="open -n /Applications/Safari.app index.html" workingdir="${ProjectDir}" />
