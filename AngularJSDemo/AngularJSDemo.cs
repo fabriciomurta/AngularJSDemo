@@ -21,6 +21,7 @@ namespace AngularJSDemo
             public string Message { get; set; }
             public string Foo { get; set; }
             public string Bar { get; set; }
+            public string[] Checkpoints { get; set; }
         }
 
         static AngularJSDemo()
@@ -44,11 +45,14 @@ namespace AngularJSDemo
             AngularJSDemo.hwbApp.Controller("hwbctl", controllerData);
             AngularJSDemo.hwbApp.Directive("brdEntryPoint", AngularJSDemo.dynMehTemplate);
 
+            var checkpoints = new List<string> { "Alpha", "Baker", "Charlie", "Delta" };
+
             var controllerStrongData = new ControllerDataObjectStructure()
             {
                 Message = "Hello, AngularJS message defined in Bridge's C#'s strongly typed class! :D",
                 Foo = "Foo fighters from strong C#.",
-                Bar = "Strong C# 777 slot"
+                Bar = "Strong C# 777 slot",
+                Checkpoints = checkpoints.ToArray()
             };
             AngularJSDemo.hwbApp.Controller("hwbSctl", controllerStrongData);
             AngularJSDemo.hwbApp.Directive("brdEntryPointForThree", AngularJSDemo.ThreeWayFunction);
@@ -81,7 +85,7 @@ namespace AngularJSDemo
         public static void StartUpIdPhase()
         {
             if (AngularJSDemo.hwbApp == null) {
-                StartUp();
+                AngularJSDemo.StartUp();
             }
 
             var x = Document.GetElementById("entryPoint");
@@ -91,6 +95,41 @@ namespace AngularJSDemo
                 x.setNGController("hwbctl");
                 x.InnerHTML = "AJS says by element ID: [{{message}}]";
             }
+
+            Document.Body.AppendChild(AngularJSDemo.GetRepeatRegion());
+        }
+
+        public static Element GetRepeatRegion() {
+            var itemsSpan = new SpanElement();
+            itemsSpan.InnerHTML = "Checkpoint";
+            var itemsPara = new ParagraphElement();
+            itemsPara.InnerHTML = "{{checkpoint}}";
+
+            var itemsLI = new LIElement();
+            itemsLI.setNGRepeat("checkpoint", "Checkpoints");
+            itemsLI.AppendChild(itemsSpan);
+            itemsLI.AppendChild(itemsPara);
+
+            var itemsUL = new UListElement();
+            itemsUL.AppendChild(itemsLI);
+
+            var itemsSubSpan = new SpanElement()
+            {
+                InnerHTML = "[{{checkpoint}}] "
+            };
+
+            itemsSubSpan.setNGRepeat("checkpoint", "Checkpoints", "cpFilter");
+
+            var itemsSearchBox = new InputElement();
+            itemsSearchBox.setNGModel("cpFilter");
+
+            var itemsDiv = new DivElement();
+            itemsDiv.setNGController("hwbSctl");
+            itemsDiv.AppendChild(itemsUL);
+            itemsDiv.AppendChild(itemsSearchBox);
+            itemsDiv.AppendChild(itemsSubSpan);
+
+            return itemsDiv;
         }
 
         /// <summary>
