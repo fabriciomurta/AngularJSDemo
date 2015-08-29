@@ -16,17 +16,18 @@ namespace AngularJSDemo
     public class AngularJSDemo
     {
 
-        private class ControllerDataObjectStructure
+        public class ControllerDataObjectStructure
         {
-            public string Message { get; set; }
-            public string Foo { get; set; }
-            public string Bar { get; set; }
-            public string[] Checkpoints { get; set; }
+            public string Message;
+            public string Foo;
+            public string Bar;
+            public object[] Checkpoints;
         }
 
         static AngularJSDemo()
         {
-            Console.Log("Checkpoint Yankee: [ctor] nothing at this point will like AngularJS.");
+            Console.Log("Checkpoint Yankee: [ctor] nothng at this point will " +
+                "like AngularJS.");
         }
 
         public static AngularJSApp hwbApp;
@@ -37,32 +38,43 @@ namespace AngularJSDemo
         /// </summary>
         public static void StartUp()
         {
-            Console.Log("Checkpoint Charlie: I must be printed BEFORE Checkpoint 1.");
+            Console.Log("Checkpoint Charlie: I must be printed BEFORE " +
+                "Checkpoint 1.");
 
             AngularJSDemo.hwbApp = new AngularJSApp("hwbApp");
 
-            var controllerData = new { message = "Hello, AngularJS message defined in Bridge's C#! :D" };
+            var controllerData = new { message = "Hello, AngularJS message " +
+                    "defined in Bridge's C#! :D" };
             AngularJSDemo.hwbApp.Controller("hwbctl", controllerData);
-            AngularJSDemo.hwbApp.Directive("brdEntryPoint", AngularJSDemo.dynMehTemplate);
+            AngularJSDemo.hwbApp.Directive("brdEntryPoint",
+                AngularJSDemo.dynMehTemplate);
 
-            var checkpoints = new List<string> { "Alpha", "Baker", "Charlie", "Delta" };
+            var checkpoints = new List<object> {
+                new { callsign = "Alpha", id = 98 },
+                new { callsign = "Baker", id = 78 },
+                new { callsign = "Charlie", id = 58 },
+                new { callsign = "Delta", id = 9 }
+            };
 
             var controllerStrongData = new ControllerDataObjectStructure()
             {
-                Message = "Hello, AngularJS message defined in Bridge's C#'s strongly typed class! :D",
+                Message = "Hello, AngularJS message defined in Bridge's C#'s " +
+                    "strongly typed class! :D",
                 Foo = "Foo fighters from strong C#.",
                 Bar = "Strong C# 777 slot",
                 Checkpoints = checkpoints.ToArray()
             };
+
             AngularJSDemo.hwbApp.Controller("hwbSctl", controllerStrongData);
-            AngularJSDemo.hwbApp.Directive("brdEntryPointForThree", AngularJSDemo.ThreeWayFunction);
+            AngularJSDemo.hwbApp.Directive("brdEntryPointForThree",
+                AngularJSDemo.ThreeWayFunction);
 
             Document.DocumentElement.setNGApp(AngularJSDemo.hwbApp);
         }
 
         /// <summary>
-        /// This function determines the format of the contents of the entry point where the dynamic
-        /// code will be injected.
+        /// This function determines the format of the contents of the entry
+        /// point where the dynamic code will be injected.
         /// </summary>
         /// <returns></returns>
         public static object dynMehTemplate()
@@ -76,12 +88,13 @@ namespace AngularJSDemo
         {
             var span = new SpanElement();
             span.setNGController("hwbSctl");
-            span.InnerHTML = "AJS for three scopined: [msg:{{Message}}][foo:{{Foo}}][bar:{{Bar}}]";
+            span.InnerHTML = "AJS for three scopined: " +
+                "[msg:{{message}}][foo:{{foo}}][bar:{{bar}}]";
             return new { template = span.OuterHTML };
         }
 
-        // This one must be called after the tag has been defined in the HTML DOM, yet before
-        // HTML DOM has been loaded (DOMContentLoaded)
+        // This one must be called after the tag has been defined in the
+        // HTML DOM, yet before HTML DOM has been loaded (DOMContentLoaded)
         public static void StartUpIdPhase()
         {
             if (AngularJSDemo.hwbApp == null) {
@@ -97,16 +110,19 @@ namespace AngularJSDemo
             }
 
             Document.Body.AppendChild(AngularJSDemo.GetRepeatRegion());
+
+            // Broken :(
+            AngularJSDemo.DefineNiceController();
         }
 
         public static Element GetRepeatRegion() {
             var itemsSpan = new SpanElement();
             itemsSpan.InnerHTML = "Checkpoint";
             var itemsPara = new ParagraphElement();
-            itemsPara.InnerHTML = "{{checkpoint}}";
+            itemsPara.InnerHTML = "{{checkpoint.callsign}}[{{checkpoint.id}}]";
 
             var itemsLI = new LIElement();
-            itemsLI.setNGRepeat("checkpoint", "Checkpoints");
+            itemsLI.setNGRepeat("checkpoint", "checkpoints");
             itemsLI.AppendChild(itemsSpan);
             itemsLI.AppendChild(itemsPara);
 
@@ -115,33 +131,109 @@ namespace AngularJSDemo
 
             var itemsSubSpan = new SpanElement()
             {
-                InnerHTML = "[{{checkpoint}}] "
+                InnerHTML = "[{{checkpoint.callsign}}.{{checkpoint.id}}] "
             };
-
-            itemsSubSpan.setNGRepeat("checkpoint", "Checkpoints", "cpFilter");
 
             var itemsSearchBox = new InputElement();
             itemsSearchBox.setNGModel("cpFilter");
+
+            var itemsOrderSelector = GetOrderBySelector("cpOrderBy");
+
+            itemsSubSpan.setNGRepeat("checkpoint", "checkpoints",
+                itemsSearchBox.getNGModel(), itemsOrderSelector.getNGModel());
 
             var itemsDiv = new DivElement();
             itemsDiv.setNGController("hwbSctl");
             itemsDiv.AppendChild(itemsUL);
             itemsDiv.AppendChild(itemsSearchBox);
+            itemsDiv.AppendChild(itemsOrderSelector);
             itemsDiv.AppendChild(itemsSubSpan);
 
             return itemsDiv;
         }
 
+        public static Element GetOrderBySelector(string ngModelName)
+        {
+            var itemsOrderSelector = new SelectElement();
+            itemsOrderSelector.setNGModel(ngModelName);
+
+            itemsOrderSelector.Add(new OptionElement() {
+                Value = "",
+                InnerHTML = "No special order"
+            });
+
+            itemsOrderSelector.Add(new OptionElement() {
+                Value = "name",
+                InnerHTML = "CallSign"
+            });
+
+            itemsOrderSelector.Add(new OptionElement() {
+                Value = "id",
+                InnerHTML = "Internal"
+            });
+
+            return itemsOrderSelector;
+        }
+
+        public static void DefineNiceController()
+        {
+            AngularJSDemo.hwbApp.Controller<ControllerDataObjectStructure>
+                ("hwcSctl", CtlFunction);
+
+            var ctlDiv = new DivElement();
+            ctlDiv.setNGController("hwcSctl");
+            Document.Body.AppendChild(ctlDiv);
+
+            var fltFld = new InputElement();
+            fltFld.setNGModel("hwcFlt");
+            ctlDiv.AppendChild(fltFld);
+
+            var ordFld = new SelectElement();
+            ordFld.setNGModel("hwcOrderBy");
+            ordFld.Add(new OptionElement() {
+                Value = "Checkpoint",
+                InnerHTML = "Alphabetically"
+            });
+            ordFld.Add(new OptionElement() {
+                Value = "id",
+                InnerHTML = "Series ID"
+            });
+            ctlDiv.AppendChild(ordFld);
+
+            var rptSpan = new SpanElement();
+            rptSpan.setNGRepeat("checkpoint", "checkpoints", fltFld.getNGModel(),
+                ordFld.getNGModel());
+            rptSpan.InnerHTML = "{{checkpoint.callsign}}[{{checkpoint.id}}] ";
+            ctlDiv.AppendChild(rptSpan);
+        }
+
+        public static void CtlFunction(
+            [Name("$scope")] ControllerDataObjectStructure scope)
+        {
+            scope.Message = "Hello, Angular defined as nice $scope function.";
+            scope.Foo = "Foo fighter nice $scope";
+            scope.Bar = "Nice $scope 777 slot";
+            scope.Checkpoints = new List<object> {
+                new { callsign = "Alpha", id = 85 },
+                new { callsign = "Baker", id = 35 },
+                new { callsign = "Charlie", id = 55 },
+                new { callsign = "Delta", id = 6 }
+            }.ToArray();
+        }
+
         /// <summary>
-        /// Trying to define AngularJS controller/app after DOM is loaded will not work.
-        /// Angular is supposed to be defined during the page composition, not after it is ready.
+        /// Trying to define AngularJS controller/app after DOM is loaded will
+        /// not work. Angular is supposed to be defined during the page
+        /// composition, not after it is ready.
         /// </summary>
         [Ready]
         public static void UpdateControls()
         {
-            Console.Log("Checkpoint Zulu: [rdy] nothing at this point will like AngularJS.");
+            Console.Log("Checkpoint Zebra: [rdy] nothing at this point will " +
+                "like AngularJS.");
 
-            var lbl = new SpanElement() { InnerHTML = "We have Bridge script running." };
+            var lbl = new SpanElement() { InnerHTML = "We have Bridge script " +
+                    "running." };
             Document.Body.AppendChild(lbl);
         }
     }
