@@ -28,6 +28,11 @@
     <None Include="..\WebInterface\js\descript.ion">
       <Link>js\descript.ion</Link>
     </None>
+    <None Include="showcase.html" />
+    <None Include="SimpleTest.html" />
+    <None Include="..\WebInterface\js\testBed.js">
+      <Link>js\testBed.js</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="js\" />
