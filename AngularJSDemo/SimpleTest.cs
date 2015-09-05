@@ -4,7 +4,6 @@ using Bridge;
 
 namespace SimpleTest
 {
-
     public static class TestClass
     {
     }
