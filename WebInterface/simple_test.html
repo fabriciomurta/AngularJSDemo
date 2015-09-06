@@ -10,9 +10,10 @@
     </script>
 </head>
 <body ng-app="MyApp">
+    <input ng-model="FilterFld" />
     <div ng-controller="MyCtl">
         <ul>
-            <li ng-repeat="item in myItems">
+            <li ng-repeat="item in myItems | filter: FilterFld">
                 {{item}}
             </li>
         </ul>
