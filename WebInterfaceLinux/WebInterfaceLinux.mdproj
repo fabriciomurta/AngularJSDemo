@@ -33,6 +33,7 @@
     <None Include="..\WebInterface\js\testBed.js">
       <Link>js\testBed.js</Link>
     </None>
+    <None Include="phonecat.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="js\" />
