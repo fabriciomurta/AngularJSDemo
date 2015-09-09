@@ -30,7 +30,7 @@ namespace AngularJSDemo
                 "like AngularJS.");
         }
 
-        public static AngularJSApp hwbApp;
+        public static Module hwbApp;
 
         /// <summary>
         /// AngularJS requires to be defined on document parse.
@@ -41,7 +41,7 @@ namespace AngularJSDemo
             Console.Log("Checkpoint Charlie: I must be printed BEFORE " +
                 "Checkpoint 1.");
 
-            AngularJSDemo.hwbApp = new AngularJSApp("hwbApp");
+            AngularJSDemo.hwbApp = Angular.Module("hwbApp");
 
             var controllerData = new { message = "Hello, AngularJS message " +
                     "defined in Bridge's C#! :D" };
@@ -69,7 +69,7 @@ namespace AngularJSDemo
             AngularJSDemo.hwbApp.Directive("brdEntryPointForThree",
                 AngularJSDemo.ThreeWayFunction);
 
-            Document.DocumentElement.setNGApp(AngularJSDemo.hwbApp);
+            Document.DocumentElement.SetNGApp(AngularJSDemo.hwbApp);
         }
 
         /// <summary>
@@ -80,14 +80,14 @@ namespace AngularJSDemo
         public static object dynMehTemplate()
         {
             var span = new SpanElement();
-            span.setNGController("hwbctl");
+            span.SetNGController("hwbctl");
             span.InnerHTML = "AJS says by directive: [{{message}}]";
             return new { template = span.OuterHTML };
         }
         public static object ThreeWayFunction()
         {
             var span = new SpanElement();
-            span.setNGController("hwbSctl");
+            span.SetNGController("hwbSctl");
             span.InnerHTML = "AJS for three scopined: " +
                 "[msg:{{message}}][foo:{{foo}}][bar:{{bar}}]";
             return new { template = span.OuterHTML };
@@ -105,7 +105,7 @@ namespace AngularJSDemo
             if (x != null)
             {
                 //x.SetAttribute("ng-controller", "hwbctl"); // same as below
-                x.setNGController("hwbctl");
+                x.SetNGController("hwbctl");
                 x.InnerHTML = "AJS says by element ID: [{{message}}]";
             }
 
@@ -122,7 +122,7 @@ namespace AngularJSDemo
             itemsPara.InnerHTML = "{{checkpoint.callsign}}[{{checkpoint.id}}]";
 
             var itemsLI = new LIElement();
-            itemsLI.setNGRepeat("checkpoint", "checkpoints");
+            itemsLI.SetNGRepeat("checkpoint", "checkpoints");
             itemsLI.AppendChild(itemsSpan);
             itemsLI.AppendChild(itemsPara);
 
@@ -135,15 +135,15 @@ namespace AngularJSDemo
             };
 
             var itemsSearchBox = new InputElement();
-            itemsSearchBox.setNGModel("cpFilter");
+            itemsSearchBox.SetNGModel("cpFilter");
 
             var itemsOrderSelector = GetOrderBySelector("cpOrderBy");
 
-            itemsSubSpan.setNGRepeat("checkpoint", "checkpoints",
-                itemsSearchBox.getNGModel(), itemsOrderSelector.getNGModel());
+            itemsSubSpan.SetNGRepeat("checkpoint", "checkpoints",
+                itemsSearchBox.GetNGModel(), itemsOrderSelector.GetNGModel());
 
             var itemsDiv = new DivElement();
-            itemsDiv.setNGController("hwbSctl");
+            itemsDiv.SetNGController("hwbSctl");
             itemsDiv.AppendChild(itemsUL);
             itemsDiv.AppendChild(itemsSearchBox);
             itemsDiv.AppendChild(itemsOrderSelector);
@@ -155,7 +155,7 @@ namespace AngularJSDemo
         public static Element GetOrderBySelector(string ngModelName)
         {
             var itemsOrderSelector = new SelectElement();
-            itemsOrderSelector.setNGModel(ngModelName);
+            itemsOrderSelector.SetNGModel(ngModelName);
 
             itemsOrderSelector.Add(new OptionElement() {
                 Value = "",
@@ -181,15 +181,15 @@ namespace AngularJSDemo
                 ("hwcSctl", CtlFunction);
 
             var ctlDiv = new DivElement();
-            ctlDiv.setNGController("hwcSctl");
+            ctlDiv.SetNGController("hwcSctl");
             Document.Body.AppendChild(ctlDiv);
 
             var fltFld = new InputElement();
-            fltFld.setNGModel("hwcFlt");
+            fltFld.SetNGModel("hwcFlt");
             ctlDiv.AppendChild(fltFld);
 
             var ordFld = new SelectElement();
-            ordFld.setNGModel("hwcOrderBy");
+            ordFld.SetNGModel("hwcOrderBy");
             ordFld.Add(new OptionElement() {
                 Value = "Checkpoint",
                 InnerHTML = "Alphabetically"
@@ -201,8 +201,8 @@ namespace AngularJSDemo
             ctlDiv.AppendChild(ordFld);
 
             var rptSpan = new SpanElement();
-            rptSpan.setNGRepeat("checkpoint", "checkpoints", fltFld.getNGModel(),
-                ordFld.getNGModel());
+            rptSpan.SetNGRepeat("checkpoint", "checkpoints", fltFld.GetNGModel(),
+                ordFld.GetNGModel());
             rptSpan.InnerHTML = "{{checkpoint.callsign}}[{{checkpoint.id}}] ";
             ctlDiv.AppendChild(rptSpan);
         }
