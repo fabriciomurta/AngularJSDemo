@@ -20,8 +20,8 @@ namespace PhoneCat
             app.Config<RouteProvider>(RouteProviderFn);
 
             var catCtl = Angular.Module("phonecatControllers");
-            catCtl.Controller<PhoneListModel, Http<PhoneModel[]>>("PhoneListCtrl", PhoneListCtrlFn);
-            catCtl.Controller<PhoneModel, PhoneModel>("PhoneDetailCtrl", PhoneDetailCtrlFn);
+            catCtl.Controller<PhoneListScopeModel, Http<PhoneModel[]>>("PhoneListCtrl", PhoneListCtrlFn);
+            catCtl.Controller<PhoneDetailsScopeModel, PhoneModel, Http<PhoneDetailsModel>>("PhoneDetailCtrl", PhoneDetailCtrlFn);
         }
 
         public static void RouteProviderFn(
@@ -42,7 +42,7 @@ namespace PhoneCat
         }
 
         public static void PhoneListCtrlFn(
-            [Name("$scope")] PhoneListModel scope,
+            [Name("$scope")] PhoneListScopeModel scope,
             [Name("$http")] Http<PhoneModel[]> http)
         {
             var httpResult = http.Get("data/phones.json");
@@ -52,10 +52,13 @@ namespace PhoneCat
         }
 
         public static void PhoneDetailCtrlFn(
-            [Name("$scope")] PhoneModel scope,
-            [Name("$routeParams")] PhoneModel routeParams)
+            [Name("$scope")] PhoneDetailsScopeModel scope,
+            [Name("$routeParams")] PhoneModel routeParams,
+            [Name("$http")] Http<PhoneDetailsModel> http)
         {
-            scope.Id = routeParams.Id;
+            var httpResult = http.Get("data/" + routeParams.Id + ".json");
+
+            httpResult.Success((data) => { scope.Phone = data; });
         }
     }
 
@@ -68,9 +71,89 @@ namespace PhoneCat
         public string Snippet;
     }
 
-    public class PhoneListModel
+    public class PhoneListScopeModel
     {
         public PhoneModel[] Phones;
         public string OrderProp;
+    }
+
+    public class PhoneDetailsScopeModel
+    {
+        public PhoneDetailsModel Phone;
+    }
+
+    public class PhoneDetailsModel
+    {
+        public string Id;
+        public string Name;
+        public string AdditionalFeatures;
+        public AndroidModel Android;
+        public string[] Availability;
+        public BatteryInfoModel Battery;
+        public CameraInfoModel Camera;
+        public ConnectivityInfoModel Connectivity;
+        public string Description;
+        public DisplayInfoModel Display;
+        public HardwareInfoModel Hardware;
+        public string[] Images;
+        public SizeAndWeightInfoModel SizeAndWeight;
+        public StorageInfoModel Storage;
+    }
+
+    public class AndroidModel
+    {
+        public string Os;
+        public string Ui;
+    }
+
+    public class BatteryInfoModel
+    {
+        public string StandbyTime;
+        public string TalkTime;
+        public string Type;
+    }
+
+    public class CameraInfoModel
+    {
+        public string[] Features;
+        public string Primart;
+    }
+
+    public class ConnectivityInfoModel
+    {
+        public string Bluetooth;
+        public string Cell;
+        public bool Gps;
+        public bool Infrared;
+        public string Wifi;
+    }
+
+    public class DisplayInfoModel
+    {
+        public string ScreenResolution;
+        public string ScreenSize;
+        public bool TouchScreen;
+    }
+
+    public class HardwareInfoModel
+    {
+        public bool Accelerometer;
+        public string AudioJack;
+        public string Cpu;
+        public bool FmRadio;
+        public bool PhysicalKeyboard;
+        public string Usb;
+    }
+
+    public class SizeAndWeightInfoModel
+    {
+        public string[] Dimensions;
+        public string Weight;
+    }
+
+    public class StorageInfoModel
+    {
+        public string Flash;
+        public string Ram;
     }
 }
