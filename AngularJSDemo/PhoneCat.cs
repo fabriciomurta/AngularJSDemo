@@ -79,7 +79,15 @@ namespace PhoneCat
         {
             var httpResult = http.Get("data/" + routeParams.Id + ".json");
 
-            httpResult.Success((data) => { scope.Phone = data; });
+            httpResult.Success((data) => {
+                scope.Phone = data;
+                scope.MainImageUrl = data.Images[0];
+            });
+
+            scope.SetImage = (imageUrl) =>
+            {
+                scope.MainImageUrl = imageUrl;
+            };
         }
     }
 
@@ -101,6 +109,19 @@ namespace PhoneCat
     public class PhoneDetailsScopeModel
     {
         public PhoneDetailsModel Phone;
+        public string MainImageUrl;
+
+        public Action<string> SetImage;
+
+        /*
+         * One could think on making the SetImage function like this:
+         *public void SetImage(string imageUrl)
+         *{
+         * this.MainImageUrl = imageUrl;
+         *}
+         * But it will not work with AngularJS: it has to be defined on the
+         * scope definition (see above).
+         */
     }
 
     public class PhoneDetailsModel
