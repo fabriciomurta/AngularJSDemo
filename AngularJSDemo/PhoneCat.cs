@@ -5,6 +5,7 @@ using Bridge.AngularJS.Services;
 using Bridge.Html5;
 using System;
 using System.Collections.Generic;
+using Bridge.AngularJS.Resource;
 
 namespace PhoneCat
 {
@@ -19,15 +20,19 @@ namespace PhoneCat
             {
                 "ngRoute",
                 "phonecatControllers",
-                "phonecatFilters"
+                "phonecatFilters",
+                "phonecatServices"
             };
             var app = Angular.Module("phonecatApp", appDepend);
 
             app.Config<RouteProvider>(RouteProviderFn);
 
             var catCtl = Angular.Module("phonecatControllers");
-            catCtl.Controller<PhoneListScopeModel, Http<PhoneModel[]>>("PhoneListCtrl", PhoneListCtrlFn);
-            catCtl.Controller<PhoneDetailsScopeModel, PhoneModel, Http<PhoneDetailsModel>>("PhoneDetailCtrl", PhoneDetailCtrlFn);
+            catCtl.Controller<PhoneListScopeModel,PhoneQueryModel>
+                ("PhoneListCtrl", PhoneListCtrlFn);
+
+            catCtl.Controller<PhoneDetailsScopeModel, PhoneModel, 
+                PhoneQueryModel>("PhoneDetailCtrl", PhoneDetailCtrlFn);
 
             var catFlt = Angular.Module("phonecatFilters");
 
@@ -43,6 +48,17 @@ namespace PhoneCat
                     return (input == "true") ? "\u2713" : "\u2718";
                 };
             });
+
+            InitServices();
+        }
+
+        public static void InitServices()
+        {
+            var phonecatServices = Angular.Module("phonecatServices",
+                                   new string[] { "ngResource" });
+
+            phonecatServices.Factory<Func<Func<string, object, ResourceActions,
+                Resource>, Resource>>("phoneService", PhoneServicesFactoryFn);
         }
 
         public static void RouteProviderFn(
@@ -64,10 +80,9 @@ namespace PhoneCat
 
         public static void PhoneListCtrlFn(
             [Name("$scope")] PhoneListScopeModel scope,
-            [Name("$http")] Http<PhoneModel[]> http)
+            PhoneQueryModel phoneService) // this MUST match the service name
         {
-            var httpResult = http.Get("data/phones.json");
-            httpResult.Success((data) => { scope.Phones = data; });
+            scope.Phones = phoneService.Query();
 
             scope.OrderProp = "age";
         }
@@ -75,19 +90,37 @@ namespace PhoneCat
         public static void PhoneDetailCtrlFn(
             [Name("$scope")] PhoneDetailsScopeModel scope,
             [Name("$routeParams")] PhoneModel routeParams,
-            [Name("$http")] Http<PhoneDetailsModel> http)
+            PhoneQueryModel phoneService) // this MUST match the service name
         {
-            var httpResult = http.Get("data/" + routeParams.Id + ".json");
-
-            httpResult.Success((data) => {
-                scope.Phone = data;
-                scope.MainImageUrl = data.Images[0];
-            });
+            scope.Phone = phoneService.Get(
+                new { Id = routeParams.Id },
+                (phone) =>
+                {
+                    scope.MainImageUrl = phone.Images[0];
+                }
+            );
 
             scope.SetImage = (imageUrl) =>
             {
                 scope.MainImageUrl = imageUrl;
             };
+        }
+
+        public static Resource PhoneServicesFactoryFn(
+            [Name("$resource")]
+            Func<string, object, ResourceActions, Resource>
+            resource)
+        {
+            return resource("data/:id.json", new object { },
+                new ResourceActions
+            {
+                Query = new ActionInfo()
+                {
+                    Method = "GET",
+                    Params = new { Id = "phones" },
+                    IsArray = true
+                }
+            });
         }
     }
 
@@ -104,6 +137,22 @@ namespace PhoneCat
     {
         public PhoneModel[] Phones;
         public string OrderProp;
+    }
+
+    // We ignore this because it is just a wrapper to the service's 'query'
+    // action.
+    [Ignore]
+    public class PhoneQueryModel
+    {
+        public PhoneModel[] Query() {
+            return default(PhoneModel[]);
+        }
+
+        public PhoneDetailsModel Get(object phoneId,
+            Action<PhoneDetailsModel> phoneTask)
+        {
+            return default(PhoneDetailsModel);
+        }
     }
 
     public class PhoneDetailsScopeModel
