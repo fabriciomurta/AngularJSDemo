@@ -15,9 +15,11 @@
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="index.html" />
-    <None Include="..\WebInterface\index-angular.html">
-      <Link>index-angular.html</Link>
+    <None Include="..\WebInterface\test.html">
+      <Link>test.html</Link>
+    </None>
+    <None Include="..\WebInterface\test-angular.html">
+      <Link>test-angular.html</Link>
     </None>
     <None Include="..\WebInterface\js\angularJSDemo.js">
       <Link>js\angularJSDemo.js</Link>
@@ -33,7 +35,9 @@
     <None Include="..\WebInterface\js\testBed.js">
       <Link>js\testBed.js</Link>
     </None>
-    <None Include="phonecat.html" />
+    <None Include="..\WebInterface\index.html">
+      <Link>index.html</Link>
+    </None>
     <None Include="..\WebInterface\partials\phone-detail.html">
       <Link>partials\phone-detail.html</Link>
     </None>
@@ -106,7 +110,9 @@
     <None Include="..\WebInterface\data\t-mobile-mytouch-4g.json">
       <Link>data\t-mobile-mytouch-4g.json</Link>
     </None>
-    <None Include="css\animations.css" />
+    <None Include="..\WebInterface\css\animations.css">
+      <Link>css\animations.css</Link>
+    </None>
     <None Include="..\WebInterface\js\phoneCat.js">
       <Link>js\phoneCat.js</Link>
     </None>
