@@ -34,8 +34,87 @@
       <Link>js\testBed.js</Link>
     </None>
     <None Include="phonecat.html" />
+    <None Include="..\WebInterface\partials\phone-detail.html">
+      <Link>partials\phone-detail.html</Link>
+    </None>
+    <None Include="..\WebInterface\partials\phone-list.html">
+      <Link>partials\phone-list.html</Link>
+    </None>
+    <None Include="..\WebInterface\css\app.css">
+      <Link>css\app.css</Link>
+    </None>
+    <None Include="..\WebInterface\data\dell-streak-7.json">
+      <Link>data\dell-streak-7.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\dell-venue.json">
+      <Link>data\dell-venue.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\droid-2-global-by-motorola.json">
+      <Link>data\droid-2-global-by-motorola.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\droid-pro-by-motorola.json">
+      <Link>data\droid-pro-by-motorola.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\lg-axis.json">
+      <Link>data\lg-axis.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\motorola-atrix-4g.json">
+      <Link>data\motorola-atrix-4g.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\motorola-bravo-with-motoblur.json">
+      <Link>data\motorola-bravo-with-motoblur.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\motorola-charm-with-motoblur.json">
+      <Link>data\motorola-charm-with-motoblur.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\motorola-defy-with-motoblur.json">
+      <Link>data\motorola-defy-with-motoblur.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\motorola-xoom-with-wi-fi.json">
+      <Link>data\motorola-xoom-with-wi-fi.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\motorola-xoom.json">
+      <Link>data\motorola-xoom.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\nexus-s.json">
+      <Link>data\nexus-s.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\phones.json">
+      <Link>data\phones.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\samsung-galaxy-tab.json">
+      <Link>data\samsung-galaxy-tab.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\samsung-gem.json">
+      <Link>data\samsung-gem.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\samsung-mesmerize-a-galaxy-s-phone.json">
+      <Link>data\samsung-mesmerize-a-galaxy-s-phone.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\samsung-showcase-a-galaxy-s-phone.json">
+      <Link>data\samsung-showcase-a-galaxy-s-phone.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\samsung-transform.json">
+      <Link>data\samsung-transform.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\sanyo-zio.json">
+      <Link>data\sanyo-zio.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\t-mobile-g2.json">
+      <Link>data\t-mobile-g2.json</Link>
+    </None>
+    <None Include="..\WebInterface\data\t-mobile-mytouch-4g.json">
+      <Link>data\t-mobile-mytouch-4g.json</Link>
+    </None>
+    <None Include="css\animations.css" />
+    <None Include="..\WebInterface\js\phoneCat.js">
+      <Link>js\phoneCat.js</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="js\" />
+    <Folder Include="partials\" />
+    <Folder Include="css\" />
+    <Folder Include="data\" />
   </ItemGroup>
 </Project>
