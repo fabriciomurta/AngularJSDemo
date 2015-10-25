@@ -16,6 +16,7 @@ namespace PhoneCat
         {
         }
 
+        [Init(InitPosition.After)]
         public static void Init() {
             var appDepend = new string[]
             {
