@@ -49,6 +49,9 @@
     <Reference Include="Bridge.Html5">
       <HintPath>..\..\..\..\Bridge\Html5\bin\Debug\Bridge.Html5.dll</HintPath>
     </Reference>
+    <Reference Include="Bridge.jQuery2">
+      <HintPath>..\..\..\..\Frameworks\jQuery2\bin\Debug\Bridge.jQuery2.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bridge\bridge.json" />

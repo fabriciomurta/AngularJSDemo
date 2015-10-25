@@ -3,6 +3,7 @@ using Bridge.AngularJS;
 using Bridge.AngularJS.Route;
 using Bridge.AngularJS.Services;
 using Bridge.Html5;
+using Bridge.jQuery2;
 using System;
 using System.Collections.Generic;
 using Bridge.AngularJS.Resource;
@@ -21,7 +22,8 @@ namespace PhoneCat
                 "ngRoute",
                 "phonecatControllers",
                 "phonecatFilters",
-                "phonecatServices"
+                "phonecatServices",
+                "phonecatAnimations"
             };
             var app = Angular.Module("phonecatApp", appDepend);
 
@@ -50,6 +52,8 @@ namespace PhoneCat
             });
 
             InitServices();
+
+            InitAnimations();
         }
 
         public static void InitServices()
@@ -59,6 +63,75 @@ namespace PhoneCat
 
             phonecatServices.Factory<Func<Func<string, object, ResourceActions,
                 Resource>, Resource>>("phoneService", PhoneServicesFactoryFn);
+        }
+
+        public static void InitAnimations() {
+            var anim = Angular.Module("phonecatAnimations",
+                new string[] { "ngAnimate" });
+
+            anim.Animation(".phone", () =>
+            {
+                // TODO: make Angular.jQuery2 project to allow 'jQuery' instead
+                //       of jqLite below.
+                Func<jqLite, string, Action, Action<bool>> animateUp =
+                    (jqLite element, string className, Action done) =>
+                {
+                    if (className != "active") {
+                        return null;
+                    }
+
+                    element.Css(
+                    new {
+                        Position = Position.Absolute,
+                        Top = 500,
+                        Left = 0,
+                        Display = Display.Block
+                    });
+
+                    // FIXME: jQuery correct syntax wanted
+                    element.ToDynamic().animate(new { Top = 0 }, 400, "swing", done);
+
+                    return (cancel) =>
+                    {
+                        if (cancel)
+                        {
+                            element.ToDynamic().stop();
+                        };
+                    };
+                };
+
+                Func<jqLite, string, Action, Action<bool>> animateDown =
+                    (jqLite element, string className, Action done) =>
+                {
+                    if (className != "active") {
+                        return null;
+                    }
+
+                    element.Css(
+                    new {
+                        Position = Position.Absolute,
+                        Top = 0,
+                        Left = 0
+                    });
+
+                    // FIXME: jQuery correct syntax wanted
+                    element.ToDynamic().animate(new { Top = -500 }, 400, "swing", done);
+                    //Script.Write("jQuery(element).animate({ top: -500 }, done);");
+
+                    return (cancel) =>
+                    {
+                        if (cancel)
+                        {
+                            element.ToDynamic().stop();
+                        };
+                    };
+                };
+
+                return new Animation {
+                    AddClass = animateUp,
+                    RemoveClass = animateDown
+                };
+            });
         }
 
         public static void RouteProviderFn(
@@ -124,6 +197,7 @@ namespace PhoneCat
         }
     }
 
+    [Ignore]
     public class PhoneModel
     {
         public int Age;
@@ -133,6 +207,7 @@ namespace PhoneCat
         public string Snippet;
     }
 
+    [Ignore]
     public class PhoneListScopeModel
     {
         public PhoneModel[] Phones;
@@ -155,6 +230,7 @@ namespace PhoneCat
         }
     }
 
+    [Ignore]
     public class PhoneDetailsScopeModel
     {
         public PhoneDetailsModel Phone;
@@ -173,6 +249,7 @@ namespace PhoneCat
          */
     }
 
+    [Ignore]
     public class PhoneDetailsModel
     {
         public string Id;
@@ -191,12 +268,14 @@ namespace PhoneCat
         public StorageInfoModel Storage;
     }
 
+    [Ignore]
     public class AndroidModel
     {
         public string Os;
         public string Ui;
     }
 
+    [Ignore]
     public class BatteryInfoModel
     {
         public string StandbyTime;
@@ -204,12 +283,14 @@ namespace PhoneCat
         public string Type;
     }
 
+    [Ignore]
     public class CameraInfoModel
     {
         public string[] Features;
         public string Primart;
     }
 
+    [Ignore]
     public class ConnectivityInfoModel
     {
         public string Bluetooth;
@@ -219,6 +300,7 @@ namespace PhoneCat
         public string Wifi;
     }
 
+    [Ignore]
     public class DisplayInfoModel
     {
         public string ScreenResolution;
@@ -226,6 +308,7 @@ namespace PhoneCat
         public bool TouchScreen;
     }
 
+    [Ignore]
     public class HardwareInfoModel
     {
         public bool Accelerometer;
@@ -236,12 +319,14 @@ namespace PhoneCat
         public string Usb;
     }
 
+    [Ignore]
     public class SizeAndWeightInfoModel
     {
         public string[] Dimensions;
         public string Weight;
     }
 
+    [Ignore]
     public class StorageInfoModel
     {
         public string Flash;
