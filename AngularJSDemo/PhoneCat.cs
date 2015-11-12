@@ -72,10 +72,8 @@ namespace PhoneCat
 
             anim.Animation(".phone", () =>
             {
-                // TODO: make Angular.jQuery2 project to allow 'jQuery' instead
-                //       of jqLite below.
-                Func<jqLite, string, Action, Action<bool>> animateUp =
-                    (jqLite element, string className, Action done) =>
+                Func<jQuery, string, Action, Action<bool>> animateUp =
+                    (jQuery element, string className, Action done) =>
                 {
                     if (className != "active") {
                         return null;
@@ -89,20 +87,19 @@ namespace PhoneCat
                         Display = Display.Block
                     });
 
-                    // FIXME: jQuery correct syntax wanted
-                    element.ToDynamic().animate(new { Top = 0 }, 400, "swing", done);
+                    element.Animate(new { Top = 0 }, 400, "swing", done);
 
                     return (cancel) =>
                     {
                         if (cancel)
                         {
-                            element.ToDynamic().stop();
+                            element.Stop();
                         };
                     };
                 };
 
-                Func<jqLite, string, Action, Action<bool>> animateDown =
-                    (jqLite element, string className, Action done) =>
+                Func<jQuery, string, Action, Action<bool>> animateDown =
+                    (jQuery element, string className, Action done) =>
                 {
                     if (className != "active") {
                         return null;
@@ -115,20 +112,18 @@ namespace PhoneCat
                         Left = 0
                     });
 
-                    // FIXME: jQuery correct syntax wanted
-                    element.ToDynamic().animate(new { Top = -500 }, 400, "swing", done);
-                    //Script.Write("jQuery(element).animate({ top: -500 }, done);");
+                    element.Animate(new { Top = -500 }, 400, "swing", done);
 
                     return (cancel) =>
                     {
                         if (cancel)
                         {
-                            element.ToDynamic().stop();
+                            element.Stop();
                         };
                     };
                 };
 
-                return new Animation {
+                return new Bridge.AngularJS.jQuery.Animation {
                     AddClass = animateUp,
                     RemoveClass = animateDown
                 };
